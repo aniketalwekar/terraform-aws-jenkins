@@ -1,20 +1,14 @@
-
-pipeline {
+pipeline{
     agent any
-    stages {
-        stage('Example') {
-            steps {
-                script {
-                    def exampleMap = [
-                        Id: 'testpipeline',
-                        url: 'https://github.com/aniketalwekar/terraform-aws-jenkins.git'
-                    ]
-                    // Rest of your script
-                }
+    tools {
+        terraform 'terraform'
+    }
+    stages{
+        stage('checkout from GIT'){
+            steps{
+               git branch: 'main', credentialsId: 'testpipeline', url: 'https://github.com/aniketalwekar/terraform-aws-jenkins.git'
             }
         }
-    }
-}
         stage('Terraform Init'){
             steps{
                 sh 'terraform init'
@@ -30,8 +24,11 @@ pipeline {
                 sh 'terraform apply --auto-approve'
             }
         }
-         stage('Terraform Destroy'){
-             steps{
-                 sh 'terraform destroy --auto-approve'
-             }
-         }
+        // stage('Terraform Destroy'){
+        //     steps{
+        //         sh 'terraform destroy --auto-approve'
+        //     }
+        // }
+       
+    }
+}
