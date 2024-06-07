@@ -1,15 +1,20 @@
 
-pipeline{
+pipeline {
     agent any
-    tools {
-        terraform 'terraform'
-    }
-    stages{
-        stage('checkout from GIT'){
-            steps{
-               git branch: 'main', credentialsId: 'testpipeline', url: https://github.com/aniketalwekar/terraform-aws-jenkins.git
+    stages {
+        stage('Example') {
+            steps {
+                script {
+                    def exampleMap = [
+                        Id: 'testpipeline',
+                        url: 'https://github.com/aniketalwekar/terraform-aws-jenkins.git'
+                    ]
+                    // Rest of your script
+                }
             }
         }
+    }
+}
         stage('Terraform Init'){
             steps{
                 sh 'terraform init'
